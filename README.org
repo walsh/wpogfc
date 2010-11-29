@@ -4,10 +4,18 @@ Use the Facebook API and create an application that will allow me to log in and 
 
 * Setup 
 
-** Check out the files for the system 
+** Check out the files for the system to a sandbox
 
 #+BEGIN_EXAMPLE
   git clone git://github.com/jwalsh/wpogfc.git
+#+END_EXAMPLE
+
+** Link or move the sandbox location to a directory under the document root of the web server
+
+If using localhost with external linking to a non-root location a 
+
+#+BEGIN_EXAMPLE
+  sudo ln -s ~/sandbox/wpogfc /opt/local/html
 #+END_EXAMPLE
 
 ** Select a domain for hosting the application
@@ -35,14 +43,6 @@ http://developers.facebook.com/setup/
 
 http://www.facebook.com/developers/apps.php?app_id=146334962085649
 
-**
-
-If using localhost with external linking to a non-root location a 
-
-/opt/local/html
- 
-
-
 
 
 
@@ -65,7 +65,6 @@ http://developers.facebook.com/docs/reference/javascript/
 http://developers.facebook.com/docs/guides/web
 
 *** API key 
-
 
 ** Render likes for authenticated user
 
