@@ -1,3 +1,15 @@
 body { 
     font-family: helvetica;
 }
+
+
+.generated, #login { 
+    float: right;
+    width: 400px;
+    overflow: hidden;
+}
+
+#status {
+    height: 25px;
+    color: #444444;
+}
