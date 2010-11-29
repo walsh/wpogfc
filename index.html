@@ -14,6 +14,25 @@
     <div id="selectedFriendLikesContainer"></div>
     <div id="selectedFriendFriendsContainer"></div>
 
+    <p><fb:login-button autologoutlink="true"></fb:login-button></p>
+    <p><fb:like></fb:like></p>
+
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({appId: '146334962085649', status: true, cookie: true,
+                 xfbml: true});
+      };
+      (function() {
+        var e = document.createElement('script');
+        e.type = 'text/javascript';
+        e.src = 'http:' + // document.location.protocol +
+          '//connect.facebook.net/en_US/all.js';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+      }());
+    </script>
+
     <script type="text/javascript" src="lib/jquery-1.4.4.js">
     </script>
     <script type="text/javascript" src="lib/underscore-1.1.2.js">
