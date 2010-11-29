@@ -14,11 +14,14 @@ Use the Facebook API and create an application that will allow me to log in and 
 
 For example, I selected a base domain of http://wal.sh/ with a directory of wpogfc/ . 
 
-Alternatively, localhost may be a viable option.  nginx can be trivially installed with:
+For sandbox review this can be completed with 
 
 #+BEGIN_EXAMPLE
-  sudo port install nginx
+  http://localhost/wpogfc/
 #+END_EXAMPLE
+
+with a symlink to the directory. 
+
 
 ** Create an Application
 
