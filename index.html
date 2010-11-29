@@ -4,27 +4,42 @@
     <link rel="stylesheet" href="styles/wpogfc.css" />
   </head>
   <body>
+
+    <p id="login"><fb:login-button 
+	  perms="user_likes,friends_likes"
+	  autologoutlink="true"></fb:login-button></p>
+
+
     <h1>Compare Your Friends on Facebook</h1>
 
-    <div id="loginContainer">[login]</div>
+    <div id="status">Loading...</div>
 
-    <div id="friendsContainer">[friends]</div>
-    <div id="likesContainer">[likes]</div>
+    <div id="likes">
+      <h2 id="likesHeader">Shared Likes</h2>
+      <ul id="selectedFriendLikesContainer"></ul>
+    </div>
 
-    <div id="selectedFriendLikesContainer"></div>
-    <div id="selectedFriendFriendsContainer"></div>
-
-    <p><fb:login-button autologoutlink="true"></fb:login-button></p>
-    <p><fb:like></fb:like></p>
+    <div id="friends">
+      <h2>Friends</h2>
+      <ul id="friendsContainer"></ul>
+    </div>
 
     <div id="fb-root"></div>
-    <script type="text/javascript" src="lib/config.js">
+
+    <script type="text/javascript" 
+	    src="lib/config.js">
     </script>
-    <script type="text/javascript" src="lib/jquery-1.4.4.js">
+    <script type="text/javascript" 
+	    src="http://connect.facebook.net/en_US/all.js">
     </script>
-    <script type="text/javascript" src="lib/underscore-1.1.2.js">
+    <script type="text/javascript" 
+	    src="lib/jquery-1.4.4.js">
     </script>
-    <script type="text/javascript" src="lib/wpogfc.js">
+    <script type="text/javascript" 
+	    src="lib/underscore-1.1.2.js">
+    </script>
+    <script type="text/javascript" 
+	    src="lib/wpogfc.js">
     </script>
   </body>
 </html>
