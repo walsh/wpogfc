@@ -18,9 +18,9 @@ If using localhost with external linking to a non-root location a
   sudo ln -s ~/sandbox/wpogfc /opt/local/html
 #+END_EXAMPLE
 
-** Select a domain for hosting the application
+** Validate that http://localhost/wpogfc/ renders "Compare Your Friends on Facebook"
 
-For example, I selected a base domain of http://wal.sh/ with a directory of wpogfc/ . 
+** Select a domain for hosting the application			   :optional:
 
 For sandbox review this can be completed with 
 
@@ -28,10 +28,11 @@ For sandbox review this can be completed with
   http://localhost/wpogfc/
 #+END_EXAMPLE
 
-with a symlink to the directory. 
+assuming a symlink to the directory was provided above. 
 
+Assuming only localhost is used the default configuration should work.
 
-** Create an Application
+** Create an Application					   :optional:
 
 http://developers.facebook.com/setup/
 
@@ -39,18 +40,21 @@ http://developers.facebook.com/setup/
 + Site URL: http://localhost/wpogfc
 + Locale: [default]
 
-** Review the Application ID
+At the end of the application process you should have access to a review page like:
 
-http://www.facebook.com/developers/apps.php?app_id=146334962085649
+#+BEGIN_EXAMPLE
+  http://www.facebook.com/developers/apps.php?app_id=146334962085649
+#+END_EXAMPLE
 
+** Update lib/config.js with the new appId			   :optional:
 
-
+This should only be necessary when not using localhost.
 
 * Implementation
 
 ** DONE Directory structure and base file setup
 
-** TODO Library implementation
+** DONE Library implementation
 
 Using jQuery for manipulating DOM elements and XHR.  Underscore added for Array extras.
  
@@ -58,19 +62,85 @@ Using jQuery for manipulating DOM elements and XHR.  Underscore added for Array 
 
 Use the hardcoded OAuth token from the sample page. 
 
-** TODO Facebook Connect 
+** DONE Facebook Connect 
 
 http://developers.facebook.com/docs/reference/javascript/
 
 http://developers.facebook.com/docs/guides/web
 
-*** API key 
+** DONE Render likes for authenticated user
 
-** Render likes for authenticated user
+** DONE Create binding when selecting a user
 
-** Create binding when selecting a user
+Default to alert() just for showing the required information needed to pass to 
 
-** Create UI clearing when selecting a new user
+** DONE Create UI clearing when selecting a new user
+
+** DONE friends.get
+
+http://developers.facebook.com/docs/reference/rest/friends.get
+
+** DONE Expand permissions
+
+{
+   "error": {
+      "type": "OAuthException",
+      "message": "(#604) Can't lookup all friends of 10720515. Can only lookup for the logged in user (1178471455), or friends of the logged in user with the appropriate permission"
+   }
+}
+
+** DONE friends.getMutualFriends
+
+http://developers.facebook.com/docs/reference/rest/friends.getMutualFriends
+
+<?xml version="1.0" encoding="UTF-8"?>
+<friends_getMutualFriends_response xmlns="http://api.facebook.com/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://api.facebook.com/1.0/ http://api.facebook.com/1.0/facebook.xsd" list="true">
+  <uid>10732378</uid>
+  <uid>586317678</uid>
+  <uid>641709854</uid>
+  <uid>710480979</uid>
+  <uid>749820125</uid>
+  <uid>1029541308</uid>
+  <uid>1222026451</uid>
+  <uid>1362995778</uid>
+</friends_getMutualFriends_response>
+
+This is the deprecated REST API which appears to only return XML. 
+
+Would require nginx proxy setup for all of the API calls.
+
+On a second review of 
+
+https://api.facebook.com/method/friends.getMutualFriends?target_uid=10732378&access_token=2227470867|2.Xf8VlYutArwGqBgDo5X5XQ__.3600.1291042800-1178471455|ts9ZN5aaXG-qf8oRghPJd4a2SJE&format=json
+
+this seemed to work.
+
+** DONE Refactor for the final workflow of the UI 
+
+** DONE Research token request failures for FB.api()
+
+#+BEGIN_EXAMPLE
+       // Test from http://developers.facebook.com/docs/reference/javascript/FB.api
+       var body = 'Reading Connect JS documentation';
+       FB.api('/me/feed', 'post', { body: body }, function(response) {
+		if (!response || response.error) {
+		  console.error(response.error);
+		} else {
+		  alert('Post ID: ' + response);
+		}
+	      });
+#+END_EXAMPLE
+
+** TODO Push in jsDoc utilities 
+** TODO Switch to mustache for templated rendering
+** TODO Mock JSON setup for unit tests 
+** Simplify API for sh.wal.wpogfc
+
+* Tests 
+
+** init without session
+** Intersection of likes 
+** Intersection of friends 
 
 * Resources
 
