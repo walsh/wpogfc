@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>README</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2010-11-29 07:32:57 PST"/>
+<meta name="author" content="Jason Walsh"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">README</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Background </a></li>
+<li><a href="#sec-2">2 Setup </a>
+<ul>
+<li><a href="#sec-2.1">2.1 Check out the files for the system to a sandbox </a></li>
+<li><a href="#sec-2.2">2.2 Link or move the sandbox location to a directory under the document root of the web server </a></li>
+<li><a href="#sec-2.3">2.3 Validate that http://localhost/wpogfc/ renders "Compare Your Friends on Facebook" </a></li>
+<li><a href="#sec-2.4">2.4 Select a domain for hosting the application</a></li>
+<li><a href="#sec-2.5">2.5 Create an Application</a></li>
+<li><a href="#sec-2.6">2.6 Update lib/config.js with the new appId</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Implementation </a>
+<ul>
+<li><a href="#sec-3.1">3.1 Directory structure and base file setup </a></li>
+<li><a href="#sec-3.2">3.2 Library implementation </a></li>
+<li><a href="#sec-3.3">3.3 Manually acquire a list of friends and likes </a></li>
+<li><a href="#sec-3.4">3.4 Facebook Connect </a></li>
+<li><a href="#sec-3.5">3.5 Render likes for authenticated user </a></li>
+<li><a href="#sec-3.6">3.6 Create binding when selecting a user </a></li>
+<li><a href="#sec-3.7">3.7 Create UI clearing when selecting a new user </a></li>
+<li><a href="#sec-3.8">3.8 friends.get </a></li>
+<li><a href="#sec-3.9">3.9 Expand permissions </a></li>
+<li><a href="#sec-3.10">3.10 friends.getMutualFriends </a></li>
+<li><a href="#sec-3.11">3.11 Refactor for the final workflow of the UI </a></li>
+<li><a href="#sec-3.12">3.12 Research token request failures for FB.api() </a></li>
+<li><a href="#sec-3.13">3.13 Push in jsDoc utilities </a></li>
+<li><a href="#sec-3.14">3.14 Switch to mustache for templated rendering </a></li>
+<li><a href="#sec-3.15">3.15 Mock JSON setup for unit tests </a></li>
+<li><a href="#sec-3.16">3.16 Simplify API for sh.wal.wpogfc </a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Tests </a>
+<ul>
+<li><a href="#sec-4.1">4.1 init without session </a></li>
+<li><a href="#sec-4.2">4.2 Intersection of likes </a></li>
+<li><a href="#sec-4.3">4.3 Intersection of friends </a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 Resources </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Background </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Use the Facebook API and create an application that will allow me to log in and pick one of my friends and see all of our common interest and common friends. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Setup </h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+</div>
+
+<div id="outline-container-2.1" class="outline-3">
+<h3 id="sec-2.1"><span class="section-number-3">2.1</span> Check out the files for the system to a sandbox </h3>
+<div class="outline-text-3" id="text-2.1">
+
+
+
+
+
+<pre class="example">git clone git://github.com/jwalsh/wpogfc.git
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2.2" class="outline-3">
+<h3 id="sec-2.2"><span class="section-number-3">2.2</span> Link or move the sandbox location to a directory under the document root of the web server </h3>
+<div class="outline-text-3" id="text-2.2">
+
+
+<p>
+If using localhost with external linking to a non-root location a 
+</p>
+
+
+
+<pre class="example">sudo ln -s ~/sandbox/wpogfc /opt/local/html
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2.3" class="outline-3">
+<h3 id="sec-2.3"><span class="section-number-3">2.3</span> Validate that <a href="http://localhost/wpogfc/">http://localhost/wpogfc/</a> renders "Compare Your Friends on Facebook" </h3>
+<div class="outline-text-3" id="text-2.3">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2.4" class="outline-3">
+<h3 id="sec-2.4"><span class="section-number-3">2.4</span> Select a domain for hosting the application &nbsp;&nbsp;&nbsp;<span class="tag"><span class="optional">optional</span></span></h3>
+<div class="outline-text-3" id="text-2.4">
+
+
+<p>
+For sandbox review this can be completed with 
+</p>
+
+
+
+<pre class="example">http://localhost/wpogfc/
+</pre>
+
+
+
+
+<p>
+assuming a symlink to the directory was provided above. 
+</p>
+<p>
+Assuming only localhost is used the default configuration should work.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2.5" class="outline-3">
+<h3 id="sec-2.5"><span class="section-number-3">2.5</span> Create an Application &nbsp;&nbsp;&nbsp;<span class="tag"><span class="optional">optional</span></span></h3>
+<div class="outline-text-3" id="text-2.5">
+
+
+<p>
+<a href="http://developers.facebook.com/setup/">http://developers.facebook.com/setup/</a>
+</p>
+<ul>
+<li>
+Site name: wpogfc
+</li>
+<li>
+Site URL: <a href="http://localhost/wpogfc">http://localhost/wpogfc</a>
+</li>
+<li>
+Locale: [default]
+
+</li>
+</ul>
+
+<p>At the end of the application process you should have access to a review page like:
+</p>
+
+
+
+<pre class="example">http://www.facebook.com/developers/apps.php?app_id=146334962085649
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2.6" class="outline-3">
+<h3 id="sec-2.6"><span class="section-number-3">2.6</span> Update lib/config.js with the new appId &nbsp;&nbsp;&nbsp;<span class="tag"><span class="optional">optional</span></span></h3>
+<div class="outline-text-3" id="text-2.6">
+
+
+<p>
+This should only be necessary when not using localhost.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Implementation </h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+</div>
+
+<div id="outline-container-3.1" class="outline-3">
+<h3 id="sec-3.1"><span class="section-number-3">3.1</span> <span class="done DONE"> DONE</span> Directory structure and base file setup </h3>
+<div class="outline-text-3" id="text-3.1">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3.2" class="outline-3">
+<h3 id="sec-3.2"><span class="section-number-3">3.2</span> <span class="done DONE"> DONE</span> Library implementation </h3>
+<div class="outline-text-3" id="text-3.2">
+
+
+<p>
+Using jQuery for manipulating DOM elements and XHR.  Underscore added for Array extras.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.3" class="outline-3">
+<h3 id="sec-3.3"><span class="section-number-3">3.3</span> <span class="done DONE"> DONE</span> Manually acquire a list of friends and likes </h3>
+<div class="outline-text-3" id="text-3.3">
+
+
+<p>
+Use the hardcoded OAuth token from the sample page. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.4" class="outline-3">
+<h3 id="sec-3.4"><span class="section-number-3">3.4</span> <span class="done DONE"> DONE</span> Facebook Connect </h3>
+<div class="outline-text-3" id="text-3.4">
+
+
+<p>
+<a href="http://developers.facebook.com/docs/reference/javascript/">http://developers.facebook.com/docs/reference/javascript/</a>
+</p>
+<p>
+<a href="http://developers.facebook.com/docs/guides/web">http://developers.facebook.com/docs/guides/web</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.5" class="outline-3">
+<h3 id="sec-3.5"><span class="section-number-3">3.5</span> <span class="done DONE"> DONE</span> Render likes for authenticated user </h3>
+<div class="outline-text-3" id="text-3.5">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3.6" class="outline-3">
+<h3 id="sec-3.6"><span class="section-number-3">3.6</span> <span class="done DONE"> DONE</span> Create binding when selecting a user </h3>
+<div class="outline-text-3" id="text-3.6">
+
+
+<p>
+Default to alert() just for showing the required information needed to pass to 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.7" class="outline-3">
+<h3 id="sec-3.7"><span class="section-number-3">3.7</span> <span class="done DONE"> DONE</span> Create UI clearing when selecting a new user </h3>
+<div class="outline-text-3" id="text-3.7">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3.8" class="outline-3">
+<h3 id="sec-3.8"><span class="section-number-3">3.8</span> <span class="done DONE"> DONE</span> friends.get </h3>
+<div class="outline-text-3" id="text-3.8">
+
+
+<p>
+<a href="http://developers.facebook.com/docs/reference/rest/friends.get">http://developers.facebook.com/docs/reference/rest/friends.get</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.9" class="outline-3">
+<h3 id="sec-3.9"><span class="section-number-3">3.9</span> <span class="done DONE"> DONE</span> Expand permissions </h3>
+<div class="outline-text-3" id="text-3.9">
+
+
+<p>
+{
+"error": {
+"type": "OAuthException",
+"message": "(#604) Can't lookup all friends of 10720515. Can only lookup for the logged in user (1178471455), or friends of the logged in user with the appropriate permission"
+}
+}
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.10" class="outline-3">
+<h3 id="sec-3.10"><span class="section-number-3">3.10</span> <span class="done DONE"> DONE</span> friends.getMutualFriends </h3>
+<div class="outline-text-3" id="text-3.10">
+
+
+<p>
+<a href="http://developers.facebook.com/docs/reference/rest/friends.getMutualFriends">http://developers.facebook.com/docs/reference/rest/friends.getMutualFriends</a>
+</p>
+<p>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;friends<sub>getMutualFriends</sub><sub>response</sub> xmlns="<a href="http://api.facebook.com/1.0/"">http://api.facebook.com/1.0/"</a> xmlns:xsi="<a href="http://www.w3.org/2001/XMLSchema-instance"">http://www.w3.org/2001/XMLSchema-instance"</a> xsi:schemaLocation="<a href="http://api.facebook.com/1.0/">http://api.facebook.com/1.0/</a> <a href="http://api.facebook.com/1.0/facebook.xsd"">http://api.facebook.com/1.0/facebook.xsd"</a> list="true"&gt;
+&lt;uid&gt;10732378&lt;/uid&gt;
+&lt;uid&gt;586317678&lt;/uid&gt;
+&lt;uid&gt;641709854&lt;/uid&gt;
+&lt;uid&gt;710480979&lt;/uid&gt;
+&lt;uid&gt;749820125&lt;/uid&gt;
+&lt;uid&gt;1029541308&lt;/uid&gt;
+&lt;uid&gt;1222026451&lt;/uid&gt;
+&lt;uid&gt;1362995778&lt;/uid&gt;
+&lt;/friends<sub>getMutualFriends</sub><sub>response&gt</sub>;
+</p>
+<p>
+This is the deprecated REST API which appears to only return XML. 
+</p>
+<p>
+Would require nginx proxy setup for all of the API calls.
+</p>
+<p>
+On a second review of 
+</p>
+<p>
+<a href="https://api.facebook.com/method/friends.getMutualFriends?target_uid=10732378&amp;access_token=2227470867|2.Xf8VlYutArwGqBgDo5X5XQ__.3600.1291042800-1178471455|ts9ZN5aaXG-qf8oRghPJd4a2SJE&amp;format=json">https://api.facebook.com/method/friends.getMutualFriends?target_uid=10732378&amp;access_token=2227470867|2.Xf8VlYutArwGqBgDo5X5XQ__.3600.1291042800-1178471455|ts9ZN5aaXG-qf8oRghPJd4a2SJE&amp;format=json</a>
+</p>
+<p>
+this seemed to work.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.11" class="outline-3">
+<h3 id="sec-3.11"><span class="section-number-3">3.11</span> <span class="done DONE"> DONE</span> Refactor for the final workflow of the UI </h3>
+<div class="outline-text-3" id="text-3.11">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3.12" class="outline-3">
+<h3 id="sec-3.12"><span class="section-number-3">3.12</span> <span class="done DONE"> DONE</span> Research token request failures for FB.api() </h3>
+<div class="outline-text-3" id="text-3.12">
+
+
+
+
+
+<pre class="example">// Test from http://developers.facebook.com/docs/reference/javascript/FB.api
+var body = 'Reading Connect JS documentation';
+FB.api('/me/feed', 'post', { body: body }, function(response) {
+         if (!response || response.error) {
+           console.error(response.error);
+         } else {
+           alert('Post ID: ' + response);
+         }
+       });
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3.13" class="outline-3">
+<h3 id="sec-3.13"><span class="section-number-3">3.13</span> <span class="todo TODO"> TODO</span> Push in jsDoc utilities </h3>
+<div class="outline-text-3" id="text-3.13">
+
+</div>
+
+</div>
+
+<div id="outline-container-3.14" class="outline-3">
+<h3 id="sec-3.14"><span class="section-number-3">3.14</span> <span class="todo TODO"> TODO</span> Switch to mustache for templated rendering </h3>
+<div class="outline-text-3" id="text-3.14">
+
+</div>
+
+</div>
+
+<div id="outline-container-3.15" class="outline-3">
+<h3 id="sec-3.15"><span class="section-number-3">3.15</span> <span class="todo TODO"> TODO</span> Mock JSON setup for unit tests </h3>
+<div class="outline-text-3" id="text-3.15">
+
+</div>
+
+</div>
+
+<div id="outline-container-3.16" class="outline-3">
+<h3 id="sec-3.16"><span class="section-number-3">3.16</span> Simplify API for sh.wal.wpogfc </h3>
+<div class="outline-text-3" id="text-3.16">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Tests </h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+</div>
+
+<div id="outline-container-4.1" class="outline-3">
+<h3 id="sec-4.1"><span class="section-number-3">4.1</span> init without session </h3>
+<div class="outline-text-3" id="text-4.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-4.2" class="outline-3">
+<h3 id="sec-4.2"><span class="section-number-3">4.2</span> Intersection of likes </h3>
+<div class="outline-text-3" id="text-4.2">
+
+</div>
+
+</div>
+
+<div id="outline-container-4.3" class="outline-3">
+<h3 id="sec-4.3"><span class="section-number-3">4.3</span> Intersection of friends </h3>
+<div class="outline-text-3" id="text-4.3">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Resources </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+<a href="https://github.com/facebook/connect-js">https://github.com/facebook/connect-js</a>
+<a href="https://github.com/jquery/jquery">https://github.com/jquery/jquery</a>
+<a href="https://github.com/documentcloud/underscore/">https://github.com/documentcloud/underscore/</a>
+</p></div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Jason Walsh
+<a href="mailto:jwalsh@Jason-Walshs-MacBook-Pro.local">&lt;jwalsh@Jason-Walshs-MacBook-Pro.local&gt;</a>
+</p>
+<p class="date"> Date: 2010-11-29 07:32:57 PST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>
