@@ -2,14 +2,76 @@
 
 Use the Facebook API and create an application that will allow me to log in and pick one of my friends and see all of our common interest and common friends. 
 
+* Setup 
+
+** Check out the files for the system 
+
+#+BEGIN_EXAMPLE
+  git clone git://github.com/jwalsh/wpogfc.git
+#+END_EXAMPLE
+
+** Select a domain for hosting the application
+
+For example, I selected a base domain of http://wal.sh/ with a directory of wpogfc/ . 
+
+Alternatively, localhost may be a viable option.  nginx can be trivially installed with:
+
+#+BEGIN_EXAMPLE
+  sudo port install nginx
+#+END_EXAMPLE
+
+** Create an Application
+
+http://developers.facebook.com/setup/
+
++ Site name: wpogfc
++ Site URL: http://localhost/wpogfc
++ Locale: [default]
+
+** Review the Application ID
+
+http://www.facebook.com/developers/apps.php?app_id=146334962085649
+
+**
+
+If using localhost with external linking to a non-root location a 
+
+/opt/local/html
+ 
+
+
+
+
+
 * Implementation
 
-** TODO Directory structure and base file setup
+** DONE Directory structure and base file setup
 
 ** TODO Library implementation
+
+Using jQuery for manipulating DOM elements and XHR.  Underscore added for Array extras.
  
-** TODO [#B] Manually acquire a list of friends and likes 
+** DONE [#B] Manually acquire a list of friends and likes 
 
 Use the hardcoded OAuth token from the sample page. 
 
 ** TODO Facebook Connect 
+
+http://developers.facebook.com/docs/reference/javascript/
+
+http://developers.facebook.com/docs/guides/web
+
+*** API key 
+
+
+** Render likes for authenticated user
+
+** Create binding when selecting a user
+
+** Create UI clearing when selecting a new user
+
+* Resources
+
+https://github.com/facebook/connect-js
+https://github.com/jquery/jquery
+https://github.com/documentcloud/underscore/
