@@ -1,0 +1,15 @@
+* Background 
+
+Use the Facebook API and create an application that will allow me to log in and pick one of my friends and see all of our common interest and common friends. 
+
+* Implementation
+
+** TODO Directory structure and base file setup
+
+** TODO Library implementation
+ 
+** TODO [#B] Manually acquire a list of friends and likes 
+
+Use the hardcoded OAuth token from the sample page. 
+
+** TODO Facebook Connect 
