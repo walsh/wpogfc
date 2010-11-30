@@ -42,9 +42,7 @@ http://developers.facebook.com/setup/
 
 At the end of the application process you should have access to a review page like:
 
-#+BEGIN_EXAMPLE
-  http://www.facebook.com/developers/apps.php?app_id=146334962085649
-#+END_EXAMPLE
++  http://www.facebook.com/developers/apps.php?app_id=146334962085649
 
 ** Update lib/config.js with the new appId			   :optional:
 
@@ -64,15 +62,15 @@ Use the hardcoded OAuth token from the sample page.
 
 ** DONE Facebook Connect 
 
-http://developers.facebook.com/docs/reference/javascript/
++ http://developers.facebook.com/docs/reference/javascript/
 
-http://developers.facebook.com/docs/guides/web
++ http://developers.facebook.com/docs/guides/web
 
 ** DONE Render likes for authenticated user
 
 ** DONE Create binding when selecting a user
 
-Default to alert() just for showing the required information needed to pass to 
+Default to alert() just for showing the required information needed to pass to the REST call.
 
 ** DONE Create UI clearing when selecting a new user
 
@@ -82,17 +80,20 @@ http://developers.facebook.com/docs/reference/rest/friends.get
 
 ** DONE Expand permissions
 
+#+BEGIN_EXAMPLE
 {
    "error": {
       "type": "OAuthException",
       "message": "(#604) Can't lookup all friends of 10720515. Can only lookup for the logged in user (1178471455), or friends of the logged in user with the appropriate permission"
    }
 }
+#+END_EXAMPLE
 
 ** DONE friends.getMutualFriends
 
 http://developers.facebook.com/docs/reference/rest/friends.getMutualFriends
 
+#+BEGIN_EXAMPLE
 <?xml version="1.0" encoding="UTF-8"?>
 <friends_getMutualFriends_response xmlns="http://api.facebook.com/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://api.facebook.com/1.0/ http://api.facebook.com/1.0/facebook.xsd" list="true">
   <uid>10732378</uid>
@@ -104,16 +105,14 @@ http://developers.facebook.com/docs/reference/rest/friends.getMutualFriends
   <uid>1222026451</uid>
   <uid>1362995778</uid>
 </friends_getMutualFriends_response>
+#+END_EXAMPLE
 
-This is the deprecated REST API which appears to only return XML. 
+This is the deprecated REST API which initially appeared to only return XML which would have required an nginx proxy setup for all of the API calls.
 
-Would require nginx proxy setup for all of the API calls.
+On a second review of the JavaScript test console though the link provided a format parameter to specify JSON:
 
-On a second review of 
++ https://api.facebook.com/method/friends.getMutualFriends?target_uid=10732378&access_token=2227470867|2.Xf8VlYutArwGqBgDo5X5XQ__.3600.1291042800-1178471455|ts9ZN5aaXG-qf8oRghPJd4a2SJE&format=json
 
-https://api.facebook.com/method/friends.getMutualFriends?target_uid=10732378&access_token=2227470867|2.Xf8VlYutArwGqBgDo5X5XQ__.3600.1291042800-1178471455|ts9ZN5aaXG-qf8oRghPJd4a2SJE&format=json
-
-this seemed to work.
 
 ** DONE Refactor for the final workflow of the UI 
 
@@ -144,6 +143,6 @@ this seemed to work.
 
 * Resources
 
-https://github.com/facebook/connect-js
-https://github.com/jquery/jquery
-https://github.com/documentcloud/underscore/
++ https://github.com/facebook/connect-js
++ https://github.com/jquery/jquery
++ https://github.com/documentcloud/underscore/
